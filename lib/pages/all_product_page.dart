@@ -25,35 +25,52 @@ class _AllProductPageState extends State<AllProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: Container(
-        // height: MediaQuery.of(context).size.height / 2,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+
+      appBar: AppBar(
+        title: const Text('MARENGOO', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),),
+        actions: [
+        IconButton(onPressed: () { Navigator.pushNamed(context, MyCartPage.routeName); }, icon: const Icon(Icons.shopping_cart, color: Colors.black,))
+      ],),
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedIndex,
+        selectedItemColor: Colors.white,
+        backgroundColor: Colors.lightGreen,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.blue,),label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.search, color: Colors.grey,),label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite_border, color: Colors.grey,),label: ""),
+          BottomNavigationBarItem(icon: Icon(Icons.person, color: Colors.grey,),label: ""),
+        ],
+      ),
+
+      body: ListView(
+        children: [
+
+          Column(
 
             children: [
 
-              ListTile(
-                title: Text('MARENGOO', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),),
-                trailing: IconButton(onPressed: () { Navigator.pushNamed(context, MyCartPage.routeName); }, icon: Icon(Icons.shopping_cart, color: Colors.black,),),
-              ),
 
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
-                    Text('NEW IN', style: TextStyle(color: Colors.grey),),
-                    Text('MENS', style: TextStyle(color: Colors.blue),),
-                    Text('WOMENS', style: TextStyle(color: Colors.grey),),
-                    Text('KIDS', style: TextStyle(color: Colors.grey),),
-                    Text('ACCESSORIES', style: TextStyle(color: Colors.grey),),
-                  ],
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child:
+                  Row(
+                    children: [
+                      TextButton(onPressed: (){}, child: const Text('NEW IN', style: TextStyle(color: Colors.grey),)),
+                      TextButton(onPressed: (){}, child: const Text('MENS', style: TextStyle(color: Colors.blue),)),
+                      TextButton(onPressed: (){}, child: const Text('WOMENS', style: TextStyle(color: Colors.grey),)),
+                      TextButton(onPressed: (){}, child: const Text('KIDS', style: TextStyle(color: Colors.grey),)),
+                      TextButton(onPressed: (){}, child: const Text('ACCESSORIES', style: TextStyle(color: Colors.grey),)),
+                    ],
+                  ),
+
                 ),
               ),
 
               SizedBox(
-                // height: 400,
                 height: MediaQuery.of(context).size.height/2,
                 child: FutureBuilder(
                   future: getProductData(),
@@ -61,71 +78,7 @@ class _AllProductPageState extends State<AllProductPage> {
 
                     if(snapshot.data == null){
 
-                      return Center(child: CircularProgressIndicator());
-                    }else{
-
-                      return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-
-                          itemCount: productList.length,
-                          itemBuilder: (context, index) => Column(
-                            children: [
-
-                              Card(
-
-                                margin: EdgeInsets.all(20),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
-
-                                child: Stack(
-                                  children: [
-                                    Image(
-                                      image: NetworkImage(productList[index].image!),
-                                      width: 200,
-                                      height: 200,
-                                      fit: BoxFit.fill,
-                                    ),
-                                    const Positioned(
-                                            right: 0,
-                                            child: Icon(
-                                              Icons.favorite_border,
-                                              color: Colors.green,
-                                            )),
-
-
-                                      ],
-                                ),
-
-                              ),
-
-                              Container(
-                                  width: 200,
-                                  height: 60,
-                                  color: Colors.white,
-                                  child: Text('${productList[index].title}',textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),)),
-
-                              Container(
-                                  width: 200,
-                                  height: 60,
-                                  color: Colors.white,
-                                  child: Text('Rs.${productList[index].price}',textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),)),
-
-                            ],
-                          ));
-                    }
-                  },
-                ),
-              ),
-
-              SizedBox(
-
-                height: MediaQuery.of(context).size.height,
-                child: FutureBuilder(
-                  future: getProductData(),
-                  builder: (context, snapshot){
-
-                    if(snapshot.data == null){
-
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     }else{
 
                       return ListView.builder(
@@ -137,7 +90,71 @@ class _AllProductPageState extends State<AllProductPage> {
 
                               Card(
 
-                                margin: EdgeInsets.all(20),
+                                margin: const EdgeInsets.all(20),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),),
+
+                                child: Stack(
+                                  children: [
+                                    Image(
+                                      image: NetworkImage(productList[index].image!),
+                                      width: 200,
+                                      height: 200,
+                                      fit: BoxFit.fill,
+                                    ),
+                                    const Positioned(
+                                        right: 0,
+                                        child: Icon(
+                                          Icons.favorite_border,
+                                          color: Colors.green,
+                                        )),
+
+
+                                  ],
+                                ),
+
+                              ),
+
+                              Container(
+                                  width: 200,
+                                  height: 60,
+                                  color: Colors.white,
+                                  child: Text('${productList[index].title}',textAlign: TextAlign.center, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),)),
+
+                              Container(
+                                  width: 200,
+                                  height: 60,
+                                  color: Colors.white,
+                                  child: Text('Rs.${productList[index].price}',textAlign: TextAlign.center, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),)),
+
+                            ],
+                          ));
+                    }
+                  },
+                ),
+              ),
+
+              SizedBox(
+
+                height: MediaQuery.of(context).size.height/2,
+                child: FutureBuilder(
+                  future: getProductData(),
+                  builder: (context, snapshot){
+
+                    if(snapshot.data == null){
+
+                      return const Center(child: CircularProgressIndicator());
+                    }else{
+
+                      return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+
+                          itemCount: productList.length,
+                          itemBuilder: (context, index) => Column(
+                            children: [
+
+                              Card(
+
+                                margin: const EdgeInsets.all(20),
 
                                 child: Stack(
                                   children: [
@@ -162,24 +179,24 @@ class _AllProductPageState extends State<AllProductPage> {
                                         child: Text(
                                           'Rs.${productList[index].price}',
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               color: Colors.black,
                                               fontWeight:
                                               FontWeight.bold),
                                         )),
-                                        ),
+                                    ),
 
 
-                                      ],
+                                  ],
                                 ),
 
                               ),
 
                               Container(
-                                  width: 200,
-                                  height: 60,
+                                  width: 180,
+                                  height: 50,
                                   color: Colors.white,
-                                  child: Text('${productList[index].title}',textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),)),
+                                  child: Text('${productList[index].title}',textAlign: TextAlign.center, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),)),
 
                             ],
                           ));
@@ -189,25 +206,13 @@ class _AllProductPageState extends State<AllProductPage> {
               ),
 
 
-              BottomNavigationBar(
-                currentIndex: selectedIndex,
-                selectedItemColor: Colors.white,
-                backgroundColor: Colors.lightGreen,
-                items: const [
-                  BottomNavigationBarItem(icon: Icon(Icons.home, color: Colors.blue,),label: ""),
-                  BottomNavigationBarItem(icon: Icon(Icons.search, color: Colors.grey,),label: ""),
-                  BottomNavigationBarItem(icon: Icon(Icons.favorite_border, color: Colors.grey,),label: ""),
-                  BottomNavigationBarItem(icon: Icon(Icons.person, color: Colors.grey,),label: ""),
-                ],
-              )
 
             ],
 
 
           ),
-        ),
 
-
+        ]
       ),
 
 

@@ -23,41 +23,16 @@ class _MyCartPageState extends State<MyCartPage> {
     return Scaffold(
       appBar: AppBar(title: const Text('Cart Page'),),
 
-      body: Card(
-        child: FutureBuilder(
-          future: getCartProductData(),
-          builder: (context, snapshot){
-
-            if(snapshot.data == null){
-              return Center(child: CircularProgressIndicator());
-            }else{
-
-              return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                  itemCount: cartProductList.length,
-                  itemBuilder: (context, index) => Card(
-
-                    child: Text(cartProductList[index].id.toString()),
-                  ));
-            }
-          },
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Loading Cart......', style: TextStyle(color: Colors.black, fontSize: 25),),
+          SizedBox(height: 30,),
+          Center(child: CircularProgressIndicator())
+        ],
       ),
 
     );
-  }
-
-  Future getCartProductData() async {
-    cartProductList.clear();
-    var response = await http.get(Uri.parse('https://fakestoreapi.com/carts'));
-    var products = jsonDecode(response.body) as List;
-
-    for(var product in products){
-      CartData cartData = CartData.fromJson(product);
-      cartProductList.add(cartData);
-    }
-
-    return cartProductList;
   }
 
 
