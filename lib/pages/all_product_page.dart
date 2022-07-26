@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/ProductData.dart';
@@ -21,7 +20,6 @@ class AllProductPage extends StatefulWidget {
 class _AllProductPageState extends State<AllProductPage> {
   List<ProductData> productList = [];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,9 +34,10 @@ class _AllProductPageState extends State<AllProductPage> {
           builder: (context, snapshot){
 
             if(snapshot.data == null){
+              print(snapshot.data);
               return Center(child: CircularProgressIndicator());
             }else{
-
+              print(snapshot.data);
               return ListView.builder(
                   itemCount: productList.length,
                   itemBuilder: (context, index) => Column(
@@ -72,7 +71,6 @@ class _AllProductPageState extends State<AllProductPage> {
 
         );
   }
-
 
 
   Future getProductData() async {

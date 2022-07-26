@@ -33,9 +33,11 @@ class _MyCartPageState extends State<MyCartPage> {
             }else{
 
               return ListView.builder(
+                scrollDirection: Axis.horizontal,
                   itemCount: cartProductList.length,
-                  itemBuilder: (context, index) => ListTile(
-                    title: Text(cartProductList[index].id.toString()),
+                  itemBuilder: (context, index) => Card(
+
+                    child: Text(cartProductList[index].id.toString()),
                   ));
             }
           },
@@ -55,7 +57,7 @@ class _MyCartPageState extends State<MyCartPage> {
       cartProductList.add(cartData);
     }
 
-     print('hello ${cartProductList.length}');
+     // print('hello ${cartProductList.length}');
     return cartProductList;
   }
 

@@ -19,9 +19,9 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      // home: const AllProductPage(),
+      home: const AllProductPage(),
 
-      initialRoute: AllProductPage.routeName,
+      // initialRoute: AllProductPage.routeName,
       routes: {
         AllProductPage.routeName: (context) => AllProductPage(),
         MyCartPage.routeName: (context) => MyCartPage(),
