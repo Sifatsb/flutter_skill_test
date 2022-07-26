@@ -57,7 +57,6 @@ class _MyCartPageState extends State<MyCartPage> {
       cartProductList.add(cartData);
     }
 
-     // print('hello ${cartProductList.length}');
     return cartProductList;
   }
 
